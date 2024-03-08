@@ -24,3 +24,5 @@ let myVar;
 
 let soma = myVar +1 ;
 console.log(soma);;
+
+//teste
