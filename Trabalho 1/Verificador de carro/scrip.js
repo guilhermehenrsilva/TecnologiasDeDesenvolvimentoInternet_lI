@@ -1,20 +1,18 @@
 function verificar(){
     var data = new Date()
     var ano = data.getFullYear()
-    var fano = document.getElementById('txtano')
+    var fano = document.getElementById('txtcarro')
     var res = document.querySelector('div#res')
     if (fano.value.length == 0 || Number(fano.value) > ano){
         window.alert('[ERRO] Verique os dados e tente novamente!')
     } else {
-    var fsex = document.getElementsByName('radsex')
-    var idade = ano - Number(fano.value)
-    var gênero = ''
+    var fsex = document.getElementsByName('radcor')
+    // var idade = ano - Number(fano.value)
+    var Cor = ''
     var img = document.createElement('img')
     img.setAttribute('Id', 'foto')
     if (fsex[0].checked){
-        gênero = 'Homem'
-        if (idade>= 0 && idade <10){
-            // criança
+        Cor = 'branco'
             img.setAttribute('src', 'foto-bebe-m.JPG')
             
         } else if (idade < 21){
@@ -47,7 +45,7 @@ function verificar(){
             } 
         }
         res.style.textAlign = 'center'
-        res.innerHTML = `Detectamos ${gênero} com ${idade} anos <br>`
+        res.innerHTML = `Detectamos ${gênero} com ${idade} anos`
         res.appendChild(img)
     }
 }

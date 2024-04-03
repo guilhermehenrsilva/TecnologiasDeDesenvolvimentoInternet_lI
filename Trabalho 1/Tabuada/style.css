@@ -5,25 +5,33 @@ body{
 }
 
 header{
-    color: white;
+    background-color: aqua;
     text-align: center;
+    color: white;
+    
 }
 
 section{
     background: white;
     border-radius:  10px;
-    padding: 15px;
-    width: 500px;
+    padding: 80px;
+    width: 100%;
     margin: auto;
-    box-shadow: 3px 3px 10px black;
-
+    box-shadow: 3px 3px 10px;
+    
 }
-
+select{
+   justify-items: flex-start;
+   width: auto;
+   margin: 5px;
+}
 footer{
     color: white;
     text-align: center;
     font-style: italic;
 }
-div{
+div {
     text-align: center;
+   
 }
+
