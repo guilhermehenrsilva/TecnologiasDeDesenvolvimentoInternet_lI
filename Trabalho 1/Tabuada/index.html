@@ -15,14 +15,22 @@
     <section>
         
         <div>
-            <p>Número <input type="number" name="num" id="txtn"></p>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Número:</span>
+                </div>
+                <input type="number" name="num" id="txtn" class="form-control"  aria-describedby="inputGroup-sizing-default">
+            </div>
         </div>
+       
 
         <div class="container">
             <div class="row">
               <div class="col">
                 <div>
-                    <input type="button" value="Gerar Tabuada de Multiplicação" onclick="tabuadaMult()">
+                    <button type="button" value="Tabuada de Multiplicação" onclick="tabuadaMult()" 
+                    class="btn btn-secondary">Tabuada de Multipliação</button>
+                   
                 </div>
                 <div>
                     <select name="tabuada" id="seltab" size="10">
@@ -34,7 +42,8 @@
               
               <div class="col">
                 <div>
-                    <input type="button" value="Gerar Tabuada de Soma" onclick="tabuadaSoma()">
+                    <button type="button" value="Tabuada de Soma" onclick="tabuadaSoma()" 
+                    class="btn btn-secondary">Tabuada de Soma</button>
                 </div>
                 <div>
                     <select name="tabuada" id="seltab2" size="10">
@@ -45,7 +54,9 @@
 
               <div class="col">
                 <div>
-                    <input type="button" value="Gerar Tabuada de Subtração" onclick="tabuadaSub()">
+                    <button type="button" value="Tabuada de Multiplicação" onclick="tabuadaSub()" 
+                    class="btn btn-secondary">Tabuada de Subtração</button>
+                   
                 </div>
                 <div>
                     <select name="tabuada" id="seltab3" size="10">
@@ -56,7 +67,9 @@
 
                 <div class="col">
                     <div>
-                        <input type="button" value="Gerar Tabuada de Divisão" onclick="tabuadaDiv()">
+                        <button type="button" value="Tabuada de Divisão" onclick="tabuadaDiv()" 
+                    class="btn btn-secondary">Tabuada de Multipliação</button>
+                        
                     </div>
                     <div>
                         <select name="tabuada" id="seltab4" size="10">
@@ -73,6 +86,6 @@
     <footer>
         <p>&copy; Guilherme Henrique</p>
     </footer>
-    <script src="scrip.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

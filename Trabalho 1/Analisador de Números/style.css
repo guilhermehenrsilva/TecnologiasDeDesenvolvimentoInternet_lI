@@ -21,6 +21,8 @@ section{
 
 select#flista{
     width: 220px;
+    text-align: center;
+    justify-content: center;
 }
 
 footer{
