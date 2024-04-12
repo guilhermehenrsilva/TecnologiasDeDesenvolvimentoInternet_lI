@@ -1,48 +1,69 @@
 const form = document.getElementById('form');
-const descImput = document.getElementById('descricao');
-const valorImput = document.querySelector('#montante');
-const balancoH1 = document.getElementById("balanco");
-// terá outras coisas
+const descInput = document.getElementById('descricao');
+const valorInput = document.querySelector('#montante');
+const balancoH1 = document.getElementById('balanco');
+const ReceitaP = document.querySelector('#din-positivo');
+const despesaP = document.querySelector('#din-negativo');
+const transacoesUL = document.getElementById('transacoes')
 
-form.addEventListener("submit", (event) =>{
+form.addEventListener('submit', (event) => {
     event.preventDefault();
 
+    const descTransacao = descInput.value.trim();
+    const valorTransacao = valorInput.value.trim();
 
-    const descTrasacao = descImput.value.trim();
-    const valorTransacao = valorImput.value.trim();
-    
-    if (descTrasacao == ""){
-        alert("Informe a descrição da transação")
-        descImput.focus();
+    if (descTransacao === '') {
+        alert("Informe a descrição!");
+        descInput.focus();
         return;
     }
-    if (valorTransacao ==""){
-        alert("Informe o  valor da transação")
-        valorImput.focus();
+    if (valorTransacao === '') {
+        alert("Informe o valor!");
+        valorInput.focus();
         return;
     }
 
     const transacao = {
-        id: parseInt ,
-        desc: descTrasacao ,
-        valor: valorTransacao,
+        id: parseInt(Math.random() * 1000),
+        desc: descTransacao,
+        valor: parseFloat(valorTransacao),
     };
 
-    somaAoSaldo();
+    somaAoSaldo(transacao);
+    somaReceitaDespesa(transacao); 
+    addTrasacaoaoDOM(transacao);
 
-
-    descImput.value = '';
-    valorImput.value = '';
+    descInput.value = '';
+    valorInput.value = '';
 });
 
-
-function somaAoSaldo(transacao){
-    // recuperar o elemento 
-    // pegar o valor e remover o R$
-
-    let valorBalanco = balancoH1.innerHTML.trim();
-    valorBalanco = valorBalanco.replace("R$","");
+function somaAoSaldo(transacao) {
+    let valorBalanco = balancoH1.innerHTML.trim().replace('R$', '');
     valorBalanco = parseFloat(valorBalanco);
+    valorBalanco += transacao.valor;
 
-    alert ((typeof valorBalanco) + valorBalanco)
+    balancoH1.innerHTML = `R$${valorBalanco.toFixed(2)}`;
+}
+
+function somaReceitaDespesa(transacao) {
+    const elemento = transacao.valor > 0 ? ReceitaP : despesaP;
+    const substituir = transacao.valor > 0 ? '+ R$' : '- R$';
+
+    let valor = elemento.innerHTML.replace(substituir, '');
+    valor = parseFloat(valor);
+    valor += Math.abs(transacao.valor);
+    elemento.innerHTML = `${substituir} ${valor.toFixed(2)}`;
+}
+
+function addTrasacaoaoDOM(transacao){
+    const cssClass = transacao.valor > 0 ? 'positivo' : 'negativo' ;
+
+    const currency = transacao.valor > 0 ? "R$" : "-R$"
+
+    const liElementStr = `${transacao.desc}<span>${currency}${Math.abs(transacao.valor)}</span><button class="delete-btn">X</button>`;
+
+  const liElement = document.createElement('li');
+    liElement.classList.add(cssClass);
+    liElement.innerHTML = liElementStr;
+    transacoesUL.append(liElement);
 }
