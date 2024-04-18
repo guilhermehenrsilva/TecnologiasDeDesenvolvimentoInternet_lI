@@ -1,3 +1,4 @@
+const chave_transacoes_ls = "transacoes";
 const form = document.getElementById('form');
 const descInput = document.getElementById('descricao');
 const valorInput = document.querySelector('#montante');
@@ -5,6 +6,13 @@ const balancoH1 = document.getElementById('balanco');
 const ReceitaP = document.querySelector('#din-positivo');
 const despesaP = document.querySelector('#din-negativo');
 const transacoesUL = document.getElementById('transacoes')
+
+let transacoesSalvas = JSON.parse(localStorage.getItem(Chave_transacoes_ls));
+ alert(transacoesSalvas + " - " + (typeof transacoesSalvas));
+    if(transacoesSalvas == null){
+        transacoesSalvas = [];
+
+    }
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -31,7 +39,7 @@ form.addEventListener('submit', (event) => {
 
     somaAoSaldo(transacao);
     somaReceitaDespesa(transacao); 
-    addTrasacaoaoDOM(transacao);
+    addTransacaoaoDOM(transacao);
 
     descInput.value = '';
     valorInput.value = '';
@@ -55,15 +63,47 @@ function somaReceitaDespesa(transacao) {
     elemento.innerHTML = `${substituir} ${valor.toFixed(2)}`;
 }
 
-function addTrasacaoaoDOM(transacao){
+function addTransacaoaoDOM(transacao){
     const cssClass = transacao.valor > 0 ? 'positivo' : 'negativo' ;
 
     const currency = transacao.valor > 0 ? "R$" : "-R$"
 
-    const liElementStr = `${transacao.desc}<span>${currency}${Math.abs(transacao.valor)}</span><button class="delete-btn">X</button>`;
+    const liElementStr = `${transacao.desc}<span>${currency}${Math.abs(transacao.valor)}
+    </span><button class="delete-btn" onclick="deletaTransacao(${transacao.id})">X</button>`;
 
   const liElement = document.createElement('li');
     liElement.classList.add(cssClass);
     liElement.innerHTML = liElementStr;
     transacoesUL.append(liElement);
+    
+    
+    transacoesSalvas.push(transacao); // adicionando ao vetor de transações LS 
+    localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
 }
+
+function carregarDados(){
+    transacoesUL.innerHTML = "";
+    balancoH1.innerHTML = "R$0.00";
+    ReceitaP.innerHTML = "+ R$0.00";
+    despesaP.innerHTML = "- R$0.00";
+
+    for(let i = 0; i < transacoesSalvas.length; i++)
+    {
+        let transacao = transacoesSalvas[i];
+        somaAoSaldo(transacao);
+        somaReceitaDespesa(transacao); 
+        addTransacaoaoDOM(transacao);
+     
+    }
+
+}
+
+
+
+function deletaTransacao(id){
+    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id );
+    transacoesSalvas.splice(transacaoIndex,1);
+    localStorage.setItem(chave_transacoes_ls.transacoesSalvas);
+}
+
+carregarDados();
