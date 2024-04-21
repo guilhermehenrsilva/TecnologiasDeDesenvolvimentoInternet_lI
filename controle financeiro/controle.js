@@ -1,109 +1,139 @@
 const chave_transacoes_ls = "transacoes";
-const form = document.getElementById('form');
-const descInput = document.getElementById('descricao');
-const valorInput = document.querySelector('#montante');
-const balancoH1 = document.getElementById('balanco');
-const ReceitaP = document.querySelector('#din-positivo');
-const despesaP = document.querySelector('#din-negativo');
-const transacoesUL = document.getElementById('transacoes')
 
-let transacoesSalvas = JSON.parse(localStorage.getItem(Chave_transacoes_ls));
- alert(transacoesSalvas + " - " + (typeof transacoesSalvas));
-    if(transacoesSalvas == null){
-        transacoesSalvas = [];
+const form = document.getElementById("form");
 
-    }
+const descInput = document.getElementById("descricao");
+const valueInput = document.getElementById("montante");
+const sinalInput = document.getElementsByName("radSinal");
 
-form.addEventListener('submit', (event) => {
-    event.preventDefault();
+const titleSaldo = document.getElementById("balanco");
 
-    const descTransacao = descInput.value.trim();
-    const valorTransacao = valorInput.value.trim();
+const receitaP = document.getElementById("din-positivo");
+const despesaP = document.getElementById("din-negativo");
 
-    if (descTransacao === '') {
-        alert("Informe a descrição!");
-        descInput.focus();
-        return;
-    }
-    if (valorTransacao === '') {
-        alert("Informe o valor!");
-        valorInput.focus();
-        return;
-    }
+const transacoesUL = document.getElementById("transacoes");
 
-    const transacao = {
-        id: parseInt(Math.random() * 1000),
-        desc: descTransacao,
-        valor: parseFloat(valorTransacao),
-    };
+let transacoesSalvas = null;
 
-    somaAoSaldo(transacao);
-    somaReceitaDespesa(transacao); 
-    addTransacaoaoDOM(transacao);
+if (localStorage.getItem(chave_transacoes_ls) != "") {
+  try {
+    transacoesSalvas = JSON.parse(localStorage.getItem(chave_transacoes_ls));
+  } catch (err) {
+    console.log("Erro:", err);
+  }
+}
 
-    descInput.value = '';
-    valorInput.value = '';
+if (transacoesSalvas === null) {
+  transacoesSalvas = [];
+}
+
+let transacaoID = transacoesSalvas.length;
+
+form.addEventListener("submit", (event) => {
+  // Não submete o formulário - Retira funcionalidade padrão do elemento
+  event.preventDefault();
+
+  const descTransacao = descInput.value.trim();
+  let valueTransacao = valueInput.value.trim();
+
+  if (descTransacao == "") {
+    alert("[ERRO] O campo 'Descrição' não pode ser vazio!");
+    descInput.focus();
+    return;
+  }
+
+  if (valueTransacao == "") {
+    alert("[ERRO!!] O campo 'Valor' não pode ser vazio!");
+    valueTransacao.focus();
+    return;
+  }
+
+  valueTransacao = Math.abs(valueTransacao);
+
+  if (sinalInput[0].checked) {
+    valueTransacao *= 1;
+  } else if (sinalInput[1].checked) {
+    valueTransacao *= -1;
+  } else {
+    alert("[ERRO] O campo de 'Entrada' deve ser escolhido!");
+    return;
+  }
+
+  const transacao = {
+    id: transacaoID,
+    desc: descTransacao,
+    valor: parseFloat(valueTransacao),
+  };
+
+  somaAoSaldo(transacao);
+  somaReceitaDespesa(transacao);
+  addTransacaoAoDOM(transacao);
+  // Adicionando ao vetor de transações
+  transacoesSalvas.push(transacao);
+  transacaoID++;
+  localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
 });
 
 function somaAoSaldo(transacao) {
-    let valorBalanco = balancoH1.innerHTML.trim().replace('R$', '');
-    valorBalanco = parseFloat(valorBalanco);
-    valorBalanco += transacao.valor;
-
-    balancoH1.innerHTML = `R$${valorBalanco.toFixed(2)}`;
+  let valorBalanco = titleSaldo.innerHTML.trim();
+  valorBalanco = valorBalanco.replace("R$", "");
+  valorBalanco = parseFloat(valorBalanco);
+  valorBalanco += transacao.valor;
+  titleSaldo.innerHTML = `R$${valorBalanco.toFixed(2)}`;
 }
 
 function somaReceitaDespesa(transacao) {
-    const elemento = transacao.valor > 0 ? ReceitaP : despesaP;
-    const substituir = transacao.valor > 0 ? '+ R$' : '- R$';
-
-    let valor = elemento.innerHTML.replace(substituir, '');
-    valor = parseFloat(valor);
-    valor += Math.abs(transacao.valor);
-    elemento.innerHTML = `${substituir} ${valor.toFixed(2)}`;
+  const elemento = transacao.valor > 0 ? receitaP : despesaP;
+  const substituir = transacao.valor > 0 ? "+ R$" : "- R$";
+  let valor = elemento.innerHTML.replace(substituir, "");
+  valor = parseFloat(valor);
+  valor += Math.abs(transacao.valor);
+  elemento.innerHTML = `${substituir}${valor.toFixed(2)}`;
 }
 
-function addTransacaoaoDOM(transacao){
-    const cssClass = transacao.valor > 0 ? 'positivo' : 'negativo' ;
+function addTransacaoAoDOM(transacao) {
+  const cssClass = transacao.valor > 0 ? "positivo" : "negativo";
+  const currency = transacao.valor > 0 ? "+R$" : "-R$";
+  const liElementStr = `${transacao.desc} <span>${currency} ${Math.abs(
+    transacao.valor
+  )}</span><button class="delete-btn" onclick="deletaTransacao(${
+    transacao.id
+  })">X</button>`;
 
-    const currency = transacao.valor > 0 ? "R$" : "-R$"
-
-    const liElementStr = `${transacao.desc}<span>${currency}${Math.abs(transacao.valor)}
-    </span><button class="delete-btn" onclick="deletaTransacao(${transacao.id})">X</button>`;
-
-  const liElement = document.createElement('li');
-    liElement.classList.add(cssClass);
-    liElement.innerHTML = liElementStr;
-    transacoesUL.append(liElement);
-    
-    
-    transacoesSalvas.push(transacao); // adicionando ao vetor de transações LS 
-    localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
+  const liElement = document.createElement("li");
+  liElement.innerHTML = liElementStr;
+  liElement.classList.add(cssClass);
+  transacoesUL.appendChild(liElement);
+  descInput.value = "";
+  valueInput.value = "";
+  for (radioIndex in sinalInput) {
+    sinalInput[radioIndex].checked = false;
+  }
 }
 
-function carregarDados(){
-    transacoesUL.innerHTML = "";
-    balancoH1.innerHTML = "R$0.00";
-    ReceitaP.innerHTML = "+ R$0.00";
-    despesaP.innerHTML = "- R$0.00";
-
-    for(let i = 0; i < transacoesSalvas.length; i++)
-    {
-        let transacao = transacoesSalvas[i];
-        somaAoSaldo(transacao);
-        somaReceitaDespesa(transacao); 
-        addTransacaoaoDOM(transacao);
-     
-    }
-
+function deletaTransacao(id) {
+  const transacaoIndex = transacoesSalvas.findIndex(
+    (transacao) => transacao.id == id
+  );
+  transacoesSalvas.splice(transacaoIndex, 1);
+  localStorage.setItem(chave_transacoes_ls, JSON.stringify(transacoesSalvas));
+  carregarDados();
 }
 
+function carregarDados() {
+  transacaoID = transacoesSalvas.length;
+  transacoesUL.innerHTML = "";
+  titleSaldo.innerHTML = "R$0.00";
+  receitaP.innerHTML = "+ R$0.00";
+  despesaP.innerHTML = "- R$0.00";
 
-
-function deletaTransacao(id){
-    const transacaoIndex = transacoesSalvas.findIndex((transacao) => transacao.id == id );
-    transacoesSalvas.splice(transacaoIndex,1);
-    localStorage.setItem(chave_transacoes_ls.transacoesSalvas);
+  for (transacao of transacoesSalvas) {
+    somaAoSaldo(transacao);
+    somaReceitaDespesa(transacao);
+    addTransacaoAoDOM(transacao);
+  }
 }
 
 carregarDados();
+
+console.log(transacoesSalvas);

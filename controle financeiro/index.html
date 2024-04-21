@@ -38,15 +38,29 @@
           <label for="descricao">
             <h3>Descrição</h3>
           </label>
-          <input autofocus type="text" id="descricao" placeholder="Descrição da transação" />
+          <input autofocus
+           type="text" 
+           id="descricao" 
+           placeholder="Descrição da transação" 
+           />
         </div>
 
         <div class="form-control">
           <label for="montante">
             <h3>Valor R$</h3>
           </label>
-          <input type="number" id="montante" placeholder="Valor da transação em R$" />
-          <small>(-) negativo para despesas</small>
+          <input
+           type="number"
+           id="montante" 
+           placeholder="Valor da transação em R$" />
+          
+          <input type="radio" name="radSinal" id="R">
+          <label for="R">Receitas</label>
+          <input type="radio" name="radSinal" id="D">
+          <label for="D">Despesas</label>
+
+
+
         </div>
 
         <button class="btn">Adicionar</button>
@@ -58,19 +72,17 @@
 
       <ul id="transacoes" class="transacoes">
         <!-- <li class="negativo">
-          Conta Energia <span>-R$5000</span><button class="delete-btn">X</button>
-        </li>
-        <li class="positivo">
-          Salário <span>R$5000</span><button class="delete-btn">X</button>
+          Conta Energia <span>-R$5000</span>
+          <button class="delete-btn" onclick="deletaTransacao(32)">X</button>
         </li> -->
-
       </ul>
     </div>
   </div>
+  <header class="final">
+    <h5>Desenvolvido por Guilherme</h5>
+  </header>
 
   <script src="controle.js"></script>
 </body>
 
-
-<script src="controle.js"></script>
 </html>
