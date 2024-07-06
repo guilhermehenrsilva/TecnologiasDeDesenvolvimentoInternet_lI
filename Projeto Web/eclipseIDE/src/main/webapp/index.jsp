@@ -6,9 +6,11 @@
 </head>
 <body>
 	<h1>
-	P√°gina Inicial est√°tica.
+	P·gina Inicial est·tica.
 	</h1>
-	
+	<p>
+		<%= new java.util.Date() %>
+	</p>
 	
 </body>
 </html>
