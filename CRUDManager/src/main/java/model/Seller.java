@@ -1,22 +1,25 @@
+
 package model;
 
 public class Seller {
-	
+
 	private int id;
 	private String name;
 	private String email;
 	private String fone;
-	private String campany;
-	
+	private Company company;
 	
 	public Seller() {
 		this(0);
 	}
 	
-	public Seller(int i) {
-		// TODO Auto-generated constructor stub
+	public Seller(int id) {
+		this.id = id;
+		setName("");
+		setEmail("");
+		setFone("");
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -41,14 +44,10 @@ public class Seller {
 	public void setFone(String fone) {
 		this.fone = fone;
 	}
-	public String getCampany() {
-		return campany;
+	public Company getCompany() {
+		return company;
 	}
-	public void setCampany(String campany) {
-		this.campany = campany;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
-	
-	
-	
-
 }
