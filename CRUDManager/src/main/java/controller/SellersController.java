@@ -16,15 +16,13 @@ import model.dao.CompanyDAO;
 import model.dao.DAOFactory;
 import model.dao.SellerDAO;
 
-@SuppressWarnings("serial")
-@WebServlet(urlPatterns = { "/sellers", "/seller/form", "/seller/insert", "/seller/update", "/seller/delete" })
+@WebServlet(urlPatterns = {"/sellers", "/seller/form", "/seller/insert", "/seller/update", "/seller/delete"})
 public class SellersController extends HttpServlet {
-
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		String action = req.getRequestURI();
-
+		
 		switch (action) {
 		case "/crud-manager/seller/form": {
 			loadCompanies(req);
@@ -41,18 +39,17 @@ public class SellersController extends HttpServlet {
 		}
 		default:
 			listSellers(req);
-
+			
 			ControllerUtil.transferSessionMessagesToRequest(req);
-
+			
 			ControllerUtil.forward(req, resp, "/sellers.jsp");
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		String action = req.getRequestURI();
-
+		
 		switch (action) {
 		case "/crud-manager/seller/insert": {
 			insertSeller(req);
@@ -65,8 +62,23 @@ public class SellersController extends HttpServlet {
 			break;
 		}
 		case "/crud-manager/seller/delete": {
-			deleteSeller(req);
-			ControllerUtil.redirect(resp, req.getContextPath() + "/sellers");
+			String sellerIdStr = req.getParameter("id");
+			String sellerName = req.getParameter("entityName");
+			int sellerId = Integer.parseInt(sellerIdStr);
+			
+			SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
+			
+			try {
+				if (dao.delete(new Seller(sellerId))) {
+					ControllerUtil.sucessMessage(req, "Vendedor " + sellerName + " excluido com sucesso");
+				} else {
+					ControllerUtil.errorMessage(req, "Vendedor " + sellerName + " não pode ser excluido");
+				}
+			} catch (ModelException e) {
+				ControllerUtil.errorMessage(req, "Erro ao excluir vendedor");
+			} finally {
+				ControllerUtil.redirect(resp, req.getContextPath() + "/sellers");
+			}
 			break;
 		}
 		default:
@@ -74,126 +86,101 @@ public class SellersController extends HttpServlet {
 		}
 	}
 
-	private void deleteSeller(HttpServletRequest req) {
-		String sellerIdStr = req.getParameter("id");
+	private void updateSeller(HttpServletRequest req) {
+		String sellerIdStr = req.getParameter("sellerId");
 		int sellerId = Integer.parseInt(sellerIdStr);
-
-		String sellerName = req.getParameter("entityName");
-
+		Seller seller = createSeller(req, sellerId);
+		
 		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
-
+		
 		try {
-			if (dao.delete(new Seller(sellerId))) {
-				ControllerUtil.sucessMessage(req, "Vendedor '" + sellerName + "' excluído com sucesso.");
+			if(dao.update(seller)) {
+				ControllerUtil.sucessMessage(req, "Vendedor '" + seller.getName() + "' alterado com sucesso.");
 			} else {
-				ControllerUtil.errorMessage(req, "Vendedor '" + sellerName + "' não pode ser excluído.");
+				ControllerUtil.errorMessage(req, "Vendedor '" + seller.getName() + "' não pode ser alterado.");
 			}
 		} catch (ModelException e) {
-			ControllerUtil.errorMessage(req, e.getMessage());
+			e.printStackTrace();
+			ControllerUtil.errorMessage(req, "Erro ao alterar dados do vendedor");
 		}
 	}
 
 	private void insertSeller(HttpServletRequest req) {
-
 		Seller seller = createSeller(req, 0);
-
+		
 		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
-
+		
 		try {
-			if (dao.save(seller))
-				ControllerUtil.sucessMessage(req, "Vendedor " + seller.getName() + " salvo com sucesso.");
-			else
-				ControllerUtil.errorMessage(req, "Vendedor " + seller.getName() + " não pode ser salvo.");
+			if(dao.save(seller)) {
+				ControllerUtil.sucessMessage(req, "Vendedor '" + seller.getName() + "' salvo com sucesso.");
+			} else {
+				ControllerUtil.errorMessage(req, "Vendedor '" + seller.getName() + "' não pode ser salvo.");
+			}
 		} catch (ModelException e) {
-			e.printStackTrace(); // log
-			ControllerUtil.errorMessage(req, e.getMessage());
+			ControllerUtil.errorMessage(req, "Erro ao salvar dados do vendedor");
 		}
-	}
-
-	private void updateSeller(HttpServletRequest req) {
-
-		String sellerIdStr = req.getParameter("seller_id");
-		int sellerId = Integer.parseInt(sellerIdStr);
-
-		Seller seller = createSeller(req, sellerId);
-
-		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
-
-		try {
-			if (dao.update(seller))
-				ControllerUtil.sucessMessage(req, "Vendedor " + seller.getName() + " alterado com sucesso.");
-			else
-				ControllerUtil.errorMessage(req, "Vendedor " + seller.getName() + " não pode ser alterado.");
-		} catch (ModelException e) {
-			e.printStackTrace(); // log
-			ControllerUtil.errorMessage(req, e.getMessage());
-		}
-
-	}
-
-	private void loadSeller(HttpServletRequest req) {
-		String sellerIdStr = req.getParameter("sellerId");
-		int sellerId = Integer.parseInt(sellerIdStr);
-
-		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
-
-		Seller seller = new Seller(0);
-
-		try {
-			seller = dao.findById(sellerId);
-		} catch (ModelException e) {
-			ControllerUtil.errorMessage(req, "Erro ao carregar vendedor para edição.");
-		}
-
-		req.setAttribute("sellerToEdit", seller);
-	}
-
-	private void loadCompanies(HttpServletRequest req) {
-		CompanyDAO dao = DAOFactory.createDAO(CompanyDAO.class);
-		List<Company> companies = new ArrayList<>();
-		try {
-			companies = dao.listAll();
-		} catch (ModelException e) {
-			ControllerUtil.errorMessage(req, "Erro ao carregar as empresas.");
-		}
-		req.setAttribute("companies", companies);
-	}
-
-	private void listSellers(HttpServletRequest req) {
-
-		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
-
-		List<Seller> sellers = new ArrayList<>();
-
-		try {
-			sellers = dao.listAll();
-		} catch (ModelException e) {
-			ControllerUtil.errorMessage(req, "Erro ao carregar dados dos vendedores.");
-		}
-
-		req.setAttribute("sellers", sellers);
 	}
 
 	private Seller createSeller(HttpServletRequest req, int sellerId) {
-
 		String sellerName = req.getParameter("seller_name");
 		String sellerEmail = req.getParameter("seller_email");
 		String sellerFone = req.getParameter("seller_fone");
 		String sellerCompany = req.getParameter("seller_company");
 		int sellerCompanyId = Integer.parseInt(sellerCompany);
-
 		Seller seller;
-		if (sellerId == 0) {
+		
+		if(sellerId == 0) {
 			seller = new Seller();
-		} else {
+		}else {
 			seller = new Seller(sellerId);
 		}
+		
 		seller.setName(sellerName);
 		seller.setEmail(sellerEmail);
 		seller.setFone(sellerFone);
 		seller.setCompany(new Company(sellerCompanyId));
-
 		return seller;
 	}
 
+	private void loadCompanies(HttpServletRequest req) {
+		List<Company> companies = new ArrayList<>();
+		CompanyDAO dao = DAOFactory.createDAO(CompanyDAO.class);
+		try {
+			companies = dao.listAll();
+		} catch (ModelException e) {
+			ControllerUtil.errorMessage(req, "Erro ao carregar dados das empresas");
+		}
+		
+		req.setAttribute("companies", companies);
+	}
+
+	private void listSellers(HttpServletRequest req) {
+		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
+		
+		List<Seller> sellers = new ArrayList<>();
+		
+		try {
+			sellers = dao.listAll();
+		} catch(ModelException e) {
+			ControllerUtil.errorMessage(req, "Erro ao carregar dados dos vendedores");
+		}
+		
+		req.setAttribute("sellers", sellers);
+	}
+	
+	private void loadSeller(HttpServletRequest req) {
+		String sellerIdStr = req.getParameter("sellerId");
+		int sellerId = Integer.parseInt(sellerIdStr);
+		
+		SellerDAO dao = DAOFactory.createDAO(SellerDAO.class);
+		Seller seller = new Seller();
+		
+		try {
+			seller = dao.findById(sellerId);
+		} catch (ModelException e) {
+			ControllerUtil.errorMessage(req, "Erro ao carregar dados do vendedor");
+		}
+		
+		req.setAttribute("sellerEdit", seller);
+	}
 }
