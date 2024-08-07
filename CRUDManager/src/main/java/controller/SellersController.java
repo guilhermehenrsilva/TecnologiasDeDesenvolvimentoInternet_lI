@@ -24,13 +24,13 @@ public class SellersController extends HttpServlet {
 		String action = req.getRequestURI();
 		
 		switch (action) {
-		case "/crud-manager/seller/form": {
+		case "/CRUDManager/seller/form": {
 			loadCompanies(req);
 			req.setAttribute("action", "insert");
 			ControllerUtil.forward(req, resp, "/form-seller.jsp");
 			break;
 		}
-		case "/crud-manager/seller/update": {
+		case "/CRUDManager/seller/update": {
 			loadSeller(req);
 			loadCompanies(req);
 			req.setAttribute("action", "update");
@@ -51,17 +51,17 @@ public class SellersController extends HttpServlet {
 		String action = req.getRequestURI();
 		
 		switch (action) {
-		case "/crud-manager/seller/insert": {
+		case "/CRUDManager/seller/insert": {
 			insertSeller(req);
 			ControllerUtil.redirect(resp, req.getContextPath() + "/sellers");
 			break;
 		}
-		case "/crud-manager/seller/update": {
+		case "/CRUDManager/seller/update": {
 			updateSeller(req);
 			ControllerUtil.redirect(resp, req.getContextPath() + "/sellers");
 			break;
 		}
-		case "/crud-manager/seller/delete": {
+		case "/CRUDManager/seller/delete": {
 			String sellerIdStr = req.getParameter("id");
 			String sellerName = req.getParameter("entityName");
 			int sellerId = Integer.parseInt(sellerIdStr);

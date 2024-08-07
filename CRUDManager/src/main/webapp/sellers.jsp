@@ -34,7 +34,7 @@
 			    </div>
 			    
 			    <div class="col-md-3">
-			        <a href="/crud-manager/seller/form" class="btn btn-danger pull-right h2"><span class="glyphicon glyphicon-plus" /></span>&nbspAdicionar Vendedor</a>
+			        <a href="/CRUDManager/seller/form" class="btn btn-danger pull-right h2"><span class="glyphicon glyphicon-plus" /></span>&nbspAdicionar Vendedor</a>
 			    </div>
 			    
 			    
