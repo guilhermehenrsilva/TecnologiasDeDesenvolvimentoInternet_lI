@@ -4,13 +4,15 @@
 <html lang="pt-br">
 	<head>
 		<%@include file="base-head.jsp"%>
+		<title>CRUD Manager - Usuários</title>
 	</head>
 	<body>
 		<%@include file="modal.html"%>
 		<%@include file="nav-menu.jsp"%>
 			
 		<div id="container" class="container-fluid">
-			<div id="alert" style="${not empty message ? 'display: block;' : 'display: none;'}" class="alert alert-dismissable ${alertType eq 1 ? 'alert-success' : 'alert-danger'}">
+			<div id="alert" style="${not empty message ? 'display: block;' : 'display: none;'}" 
+							class="alert alert-dismissable ${alertType eq 1 ? 'alert-success' : 'alert-danger'}">
 			  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			  ${message}
 			</div>
@@ -99,16 +101,18 @@
 			        $("#alert").slideUp(500);
 			    }, 3000);
 			    
-			    // ao clicar no delete de algum post, pega o nome do usuário, 
-			    // o id do usuário e a ação (delete) e envia para o modal 
-			    $(".modal-remove").click(function () {
-		            var userName = $(this).attr('user-name');
-		            var userId = $(this).attr('user-id');
-		            $(".modal-body #hiddenValue").text("o usuário '"+userName+"'");
-		            $("#id").attr( "value", userId);
-		            $("#form").attr( "action","user/delete");
-		        })
-			});
+			    
+			// ao clicar no delete de algum post, pega o nome do usuário, 
+						// o id do usuário e a ação (delete) e envia para o modal 
+						$(".modal-remove").click(
+								function() {
+									var userName = $(this).attr('user-name');
+									var userId = $(this).attr('user-id');
+									$(".modal-body #hiddenValue").text("o usuário '" + userName + "'");
+									$("#id").attr("value", userId);
+									$("#form").attr("action", "user/delete");
+								})
+					});
 		</script>
 	</body>
 </html>

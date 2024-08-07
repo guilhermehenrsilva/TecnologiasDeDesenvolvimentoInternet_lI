@@ -4,7 +4,7 @@
 <html lang="pt-br">
 <head>
 <%@include file="base-head.jsp"%>
-<title>CRUD Manager - Vendedores</title>
+<title>CRUD Manager - Produtos</title>
 </head>
 <body>
 	<%@include file="modal.html"%>
@@ -20,13 +20,13 @@
 
 		<div id="top" class="row">
 			<div class="col-md-3">
-				<h3>Vendedores</h3>
+				<h3>Produtos</h3>
 			</div>
 
 			<div class="col-md-6">
 				<div class="input-group h2">
 					<input name="data[search]" class="form-control" id="search"
-						type="text" placeholder="Pesquisar vendedores"> <span
+						type="text" placeholder="Pesquisar Produtos"> <span
 						class="input-group-btn">
 						<button class="btn btn-danger" type="submit">
 							<span class="glyphicon glyphicon-search"></span>
@@ -36,9 +36,9 @@
 			</div>
 
 			<div class="col-md-3">
-				<a href="/CRUDManager/seller/form"
+				<a href="/CRUDManager/product/form"
 					class="btn btn-danger pull-right h2"><span
-					class="glyphicon glyphicon-plus"></span>&nbspAdicionar Vendedor</a>
+					class="glyphicon glyphicon-plus"></span>&nbspAdicionar Produto</a>
 			</div>
 		</div>
 
@@ -52,29 +52,29 @@
 					<thead>
 						<tr>
 							<th>Nome</th>
-							<th>Email</th>
-							<th>Telefone</th>
-							<th>Empresa</th>
+							<th>Marca</th>
+							<th>Quantidade</th>
+							<th>Fornecedor</th>
 							<th>Editar</th>
 							<th>Excluir</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<c:forEach var="seller" items="${sellers}">
+						<c:forEach var="products" items="${products}">
 							<tr>
-								<td>${seller.getName()}</td>
-								<td>${seller.getEmail()}</td>
-								<td>${seller.getFone()}</td>
-								<td>${seller.getCompany().getName()}</td>
+								<td>${product.getNome()}</td>
+								<td>${product.getQuantidade()}</td>
+								<td>${product.getMarca()}</td>
+								<td>${product.getCompany().getNome()}</td>
 								<td class="actions"><a class="btn btn-info btn-xs"
-									href="${pageContext.request.contextPath}/seller/update?sellerId=${seller.getId()}">
+									href="${pageContext.request.contextPath}/product/update?productId=${product.getId()}">
 										<span class="glyphicon glyphicon-edit"></span>
 								</a></td>
 								<td class="actions"><a
 									class="btn btn-danger btn-xs modal-remove"
-									data-seller-id="${seller.getId()}"
-									data-seller-name="${seller.getName()}" data-toggle="modal"
+									data-product-id="${product.getId()}"
+									data-product-name="${product.getNome()}" data-toggle="modal"
 									data-target="#delete-modal" href="#"><span
 										class="glyphicon glyphicon-trash"></span></a></td>
 							</tr>
@@ -107,14 +107,13 @@
 						$("#alert").slideUp(500);
 					}, 3000);
 
-					$(".modal-remove").click(
-							function() {
-								var sellerName = $(this).attr('data-seller-name');
-								var sellerId = $(this).attr('data-seller-id');
-								$(".modal-body #hiddenValue").text("o vendedor '" + sellerName + "'");
-								$("#id").attr("value", sellerId);
-								$("#entityName").attr("value", sellerName);
-								$("#form").attr("action", "seller/delete");
+					$(".modal-remove").click(function() {
+								var productNome = $(this).attr('product-nome');
+								var productId = $(this).attr('product-id');
+								$(".modal-body #hiddenValue").text("O produto '" + productNome + "'");
+								$("#id").attr("value", productId);
+								$("#entityName").attr("value", productNome);
+								$("#form").attr("action", "product/delete");
 							})
 				});
 	</script>

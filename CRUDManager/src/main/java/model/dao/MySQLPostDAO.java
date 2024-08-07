@@ -30,9 +30,9 @@ public class MySQLPostDAO implements PostDAO {
 		DBHandler db = new DBHandler();
 		
 		String sqlUpdate = "UPDATE posts "
-						 					+ " SET content = ?,"
-						 					+ " user_id = ?"
-						 					+ " WHERE id = ?";
+						 + " SET content = ?,"
+						 + " user_id = ?"
+						 + " WHERE id = ?";
 		
 		db.prepareStatement(sqlUpdate);
 		
