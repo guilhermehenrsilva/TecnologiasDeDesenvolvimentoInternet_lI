@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="form-group col-md-6">
-					<label for="content">Quantidade</label> <input type="quantidade"
+					<label for="content">Quantidade</label> <input type="text"
 						class="form-control" id="product_quantidade" name="product_quantidade"
 						autofocus="autofocus" placeholder="Quantidade do produto" required
 						oninvalid="this.setCustomValidity('Por favor, informe a quantidade do produto.')"
@@ -50,7 +50,7 @@
 						name="product_company" required
 						oninvalid="this.setCustomValidity('Por favor, informe a Empresa.')"
 						oninput="setCustomValidity('')">
-						<option value=""disabled ${notemptysellerToEdit ? "" : "selected"}>Selecione
+						<option value=""disabled ${notemptyproductToEdit ? "" : "selected"}>Selecione
 							uma empresa</option>
 						<c:forEach var="company" items="${companies}">
 							<option value="${company.getId()}"
@@ -65,7 +65,7 @@
 
 			<div id="actions" class="row pull-right">
 				<div class="col-md-12">
-					<a href="${pageContext.request.contextPath}/product"
+					<a href="${pageContext.request.contextPath}/products"
 						class="btn btn-default">Cancelar</a>
 					<button type="submit" class="btn btn-primary">${action eq "insert" ? "Criar" : "Editar"}
 						Produto</button>

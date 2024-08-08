@@ -61,12 +61,12 @@
 					</thead>
 
 					<tbody>
-						<c:forEach var="products" items="${products}">
+						<c:forEach var="product" items="${products}">
 							<tr>
 								<td>${product.getNome()}</td>
-								<td>${product.getQuantidade()}</td>
 								<td>${product.getMarca()}</td>
-								<td>${product.getCompany().getNome()}</td>
+								<td>${product.getQuantidade()}</td>
+								<td>${product.getCompany().getName()}</td>
 								<td class="actions"><a class="btn btn-info btn-xs"
 									href="${pageContext.request.contextPath}/product/update?productId=${product.getId()}">
 										<span class="glyphicon glyphicon-edit"></span>
@@ -108,8 +108,8 @@
 					}, 3000);
 
 					$(".modal-remove").click(function() {
-								var productNome = $(this).attr('product-nome');
-								var productId = $(this).attr('product-id');
+								var productNome = $(this).attr('data-product-nome');
+								var productId = $(this).attr('data-product-id');
 								$(".modal-body #hiddenValue").text("O produto '" + productNome + "'");
 								$("#id").attr("value", productId);
 								$("#entityName").attr("value", productNome);

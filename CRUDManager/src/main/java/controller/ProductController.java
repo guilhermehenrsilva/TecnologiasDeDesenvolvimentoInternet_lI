@@ -18,7 +18,7 @@ import model.dao.ProductDAO;
 
 
 @SuppressWarnings("serial")
-@WebServlet(urlPatterns = { "/product", "/product/form", "/product/insert", "/product/update", "/product/delete" })
+@WebServlet(urlPatterns = { "/products", "/product/form", "/product/insert", "/product/update", "/product/delete" })
 public class ProductController extends HttpServlet {
 	
 	@Override
@@ -45,7 +45,7 @@ public class ProductController extends HttpServlet {
 
 			ControllerUtil.transferSessionMessagesToRequest(req);
 
-			ControllerUtil.forward(req, resp, "/product.jsp");
+			ControllerUtil.forward(req, resp, "/products.jsp");
 		}
 	}
 	
@@ -57,17 +57,17 @@ public class ProductController extends HttpServlet {
 		switch (action) {
 		case "/CRUDManager/product/insert": {
 			insertProduct(req);
-			ControllerUtil.redirect(resp, req.getContextPath() + "/product");
+			ControllerUtil.redirect(resp, req.getContextPath() + "/products");
 			break;
 		}
 		case "/CRUDManager/product/update": {
 			updateProduct(req);
-			ControllerUtil.redirect(resp, req.getContextPath() + "/product");
+			ControllerUtil.redirect(resp, req.getContextPath() + "/products");
 			break;
 		}
 		case "/CRUDManager/product/delete": {
 			deleteProduct(req);
-			ControllerUtil.redirect(resp, req.getContextPath() + "/product");
+			ControllerUtil.redirect(resp, req.getContextPath() + "/products");
 			break;
 		}
 		default:

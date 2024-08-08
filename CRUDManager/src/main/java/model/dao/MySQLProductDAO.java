@@ -63,7 +63,7 @@ public class MySQLProductDAO implements ProductDAO {
 
 		List<Product> products = new ArrayList<Product>();
 		// Declara uma instrução SQL
-		String sqlQuery = "select p.id as ID, p.nome as Nome, p.quantidade as Quantidade, p.marca as Marca, c.id as Company_id from product p inner join companies c on p.company_id = c.id";     
+		String sqlQuery = "select p.id as ID, p.nome as Nome, p.quantidade as Quantidade, p.marca as Marca, c.id as company_id from product p inner join companies c on p.company_id = c.id";     
 
 		db.createStatement();
 
