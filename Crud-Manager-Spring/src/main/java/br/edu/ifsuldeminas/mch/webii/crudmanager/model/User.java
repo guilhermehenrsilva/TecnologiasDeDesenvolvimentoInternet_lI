@@ -6,51 +6,53 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "users")
-		public class User {
+public class User {
 	
-			@Id
-			@GeneratedValue(strategy = GenerationType.AUTO)
-			private Integer id;
-			
-			private String name;
-			private String gender;
-			private String email;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
-		public User(Integer id) {
-			this.id = id;
-			
-		}
+	private String name;
+	private String gender;
+	private String email;
+	
+	public User() {}
+	
+	public User(Integer id) {
+		this.id = id;
+	}
 
-		public String getName() {
-			return name;
-		}
+	public String getName() {
+		return name;
+	}
 
-		public void setName(String name) {
-			this.name = name;
-		}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		public String getGender() {
-			return gender;
-		}
+	public String getGender() {
+		return gender;
+	}
 
-		public void setGender(String gender) {
-			this.gender = gender;
-		}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-		public String getEmail() {
-			return email;
-		}
+	public String getEmail() {
+		return email;
+	}
 
-		public void setEmail(String email) {
-			this.email = email;
-		}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-		public Integer getId() {
-			return id;
-		}
-				
-				
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }

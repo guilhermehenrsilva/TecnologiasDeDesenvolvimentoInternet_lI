@@ -10,22 +10,24 @@ import jakarta.transaction.Transactional;
 
 @Component
 @Transactional
-public class InitializeDataBase implements CommandLineRunner {
-	
+public class InitializeDataBase implements CommandLineRunner  {
+
 	@Autowired
 	private UserRepository userRepo;
 	
-	
-	
 	@Override
 	public void run(String... args) throws Exception {
-		User guilherme = new User();
+		User emerson = new User();
+		emerson.setName("Emerson Carvalho");
+		emerson.setGender("M");
+		emerson.setEmail("emerson@mail.com");
 		
-		guilherme.setName("Guilherme Henrique");
-		guilherme.setGender("M");
-		guilherme.setEmail("guilherme@gmail.com");
+		User lu = new User();
+		lu.setName("Luiza Carvalho");
+		lu.setGender("F");
+		lu.setEmail("luiza@mail.com");
 		
-		
+		userRepo.save(emerson);
+		userRepo.save(lu);
 	}
-
 }
