@@ -1,6 +1,5 @@
-package br.edu.ifsuldeminas.mch.si.springbase;
 
-import java.util.Date;
+/*
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,3 +18,4 @@ public String boasVindas(Model model) {
     return "bem-vindo.html";
 }
 }
+*/

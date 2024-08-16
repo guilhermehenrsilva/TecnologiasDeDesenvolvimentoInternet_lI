@@ -1,3 +1,4 @@
+
 package br.edu.ifsuldeminas.mch.webii.crudmanager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,24 +11,26 @@ import jakarta.transaction.Transactional;
 
 @Component
 @Transactional
-public class InitializeDataBase implements CommandLineRunner  {
+public class InitializeDataBase implements CommandLineRunner{
 
-	@Autowired
-	private UserRepository userRepo;
-	
-	@Override
-	public void run(String... args) throws Exception {
-		User emerson = new User();
-		emerson.setName("Emerson Carvalho");
-		emerson.setGender("M");
-		emerson.setEmail("emerson@mail.com");
-		
-		User lu = new User();
-		lu.setName("Luiza Carvalho");
-		lu.setGender("F");
-		lu.setEmail("luiza@mail.com");
-		
-		userRepo.save(emerson);
-		userRepo.save(lu);
-	}
+    @Autowired
+    private UserRepository userRepo;
+
+    @Override
+    public void run(String... args) throws Exception {
+        User luiz = new User();
+        luiz.setName("Luiz Henrique Souza");
+        luiz.setGender("M");
+        luiz.setEmail("luiz@mail.com");
+
+        User gui = new User();
+        gui.setName("Guilherme Souza");
+        gui.setGender("M");
+        gui.setEmail("gui@mail.com");
+
+        userRepo.save(luiz);
+        userRepo.save(gui);
+    }
+
 }
+

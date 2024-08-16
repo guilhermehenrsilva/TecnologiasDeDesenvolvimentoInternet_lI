@@ -17,62 +17,53 @@ import br.edu.ifsuldeminas.mch.webii.crudmanager.repo.UserRepository;
 @Controller
 public class UserController {
 
-	@Autowired
-	private UserRepository userRepo;
-	
-	@GetMapping("/users")
-	public String listUsers(Model model) {
-		
-		List<User> users = userRepo.findAll();
-		
-		model.addAttribute("usarios", users);
-		
-		return "index";
-	}
-	
-	@GetMapping("/users/form")
-	public String userForm(@ModelAttribute("usuario") User user) { 
-		// Estudar o mecanismo de "Binding" do Spring 
-					
-		return "users_form";
-	}
-	
-	@PostMapping("/users/register")
-	public String userNew(@ModelAttribute("usuario") User user) {
-		
-		System.out.println(user.getId() + user.getName() + user.getEmail() + user.getGender());
-		
-		userRepo.save(user);
-		
-		return "redirect:/users";
-	}
-	
-	
-	@GetMapping("/users/update/{id}")
-	public String userUpdate(@PathVariable("id") 
-	                         Integer id,
-	                         Model model) {
-		
-		Optional<User> userOpt = userRepo.findById(id);
-		User user;
-		
-		if (!userOpt.isPresent()) {
-			user = new User();
-		} else {
-			user = userOpt.get();
-		}		
-		
-		model.addAttribute("usuario", user);
-		
-		return "users_form";
-	}
-	
-	@GetMapping("/users/delete/{id}")
-	public String userDelete(@PathVariable("id") Integer id) {
-		
-		userRepo.delete(new User(id));
-		
-		return "redirect:/users";
-	}
-	
+    @Autowired
+    private UserRepository userRepo;
+
+    @GetMapping("/users")
+    public String listUsers(Model model) {
+        List<User> users = userRepo.findAll();
+
+        model.addAttribute("usuarios", users);
+
+        return "index";
+    }
+
+    @GetMapping("/users/form")
+    public String userForm(@ModelAttribute("usuario") User user) {
+        return "users_form";
+    }
+
+    @PostMapping("/users/register")
+    public String userNew(@ModelAttribute("usuario") User user) {
+
+        userRepo.save(user);
+
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/update/{id}")
+    public String userUpdate(@PathVariable("id") Integer id, Model model) {
+
+        Optional<User> userOpt = userRepo.findById(id);
+        User user;
+
+        if(!userOpt.isPresent()) {
+            user = new User();
+        } else {
+            user = userOpt.get();
+        }
+
+        model.addAttribute("usuario", user);
+
+        return "users_form";
+    }
+    
+    @GetMapping("/users/delete/{id}")
+    public String userDelete(@PathVariable("id") Integer id) {
+
+        userRepo.delete(new User(id));
+
+        return "redirect:/users";
+    }
 }

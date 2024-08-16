@@ -74,7 +74,7 @@
 								<td class="actions"><a
 									class="btn btn-danger btn-xs modal-remove"
 									data-product-id="${product.getId()}"
-									data-product-name="${product.getNome()}" data-toggle="modal"
+									data-product-nome="${product.getNome()}" data-toggle="modal"
 									data-target="#delete-modal" href="#"><span
 										class="glyphicon glyphicon-trash"></span></a></td>
 							</tr>
