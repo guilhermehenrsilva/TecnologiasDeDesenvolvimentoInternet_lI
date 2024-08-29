@@ -6,19 +6,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.ifsuldeminas.mch.webii.crudmanager.model.User;
-import br.edu.ifsuldeminas.mch.webii.crudmanager.repo.UserRepository;
+import br.edu.ifsuldeminas.mch.webii.crudmanager.repository.AddressRepository;
+import br.edu.ifsuldeminas.mch.webii.crudmanager.repository.UserRepository;
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private AddressRepository addressRepo;
 
     @GetMapping("/users")
     public String listUsers(Model model) {
@@ -35,8 +41,13 @@ public class UserController {
     }
 
     @PostMapping("/users/register")
-    public String userNew(@ModelAttribute("usuario") User user) {
+    public String userNew(@Valid @ModelAttribute("usuario") User user, BindingResult errors) {
 
+        if (errors.hasErrors()) {
+            return "users_form";
+        }
+
+        addressRepo.save(user.getAddress());
         userRepo.save(user);
 
         return "redirect:/users";

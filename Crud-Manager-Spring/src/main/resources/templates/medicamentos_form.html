@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head>
+        <div th:replace="cabecalho :: head"></div>
+        <title>Crud Manager - Form Medicamentos</title>
+    </head>
+
+    <body>
+        
+        <div class="container my-2">
+            <h2>Medicamento</h2>
+            <form action="#" th:action="@{/medicamentos/register}" method="POST" th:object="${medicamento}">
+
+                <input type="hidden" id="id" th:field="*{id}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}">
+                </span>
+                <input type="text" placeholder="Nome" class="form-control mb-4 col-4" th:field="*{name}"> 
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('tipo')}"
+                    th:errors="*{tipo}">
+                </span>
+                <input type="text" placeholder="Tipo" class="form-control mb-4 col-4" th:field="*{tipo}">
+                
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('marca')}"
+                    th:errors="*{marca}">
+                </span>
+                <input type="text" placeholder="Marca" class="form-control mb-4 col-4" th:field="*{marca}">
+
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('quantidade')}"
+                    th:errors="*{quantidade}">
+                </span>
+                <input type="text" placeholder="Quantidade" class="form-control mb-4 col-4" th:field="*{quantidade}">
+
+
+
+
+                <!-- farmacia  -->
+                <input type="hidden" id="idFarmacia" name="id" th:field="*{farmacia.id}">
+ 
+
+                <span 
+                    class="text-danger"
+                    th:if="${#fields.hasErrors('farmacia.nome')}"
+                    th:errors="*{farmacia.nome}">
+                </span>
+                <input type="nome" placeholder="Nome" class="form-control mb-4 col-4" th:field="*{farmacia.nome}">
+
+
+                
+                <button type="submit" class="btn btn-info col-2">Salvar</button>                
+            </form>
+            <hr>
+            <a th:href="@{/medicamentos}">Medicamentos</a>
+        </div>
+    </body>
+</html>

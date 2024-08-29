@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="cabecalho :: head"></div>
+	
+	<title>Crud Manager - Farmacia</title>
+</head>
+<body>
+	<div th:replace="menu :: header"></div>
+	<div class="container my-2">
+		<h1>Farmacias</h1>
+		<div>				
+			<a th:href="@{pharmacies/form}"
+			   class="btn btn-primary btn-sm mb-3 float-right">
+	   			Adicionar Farmacia
+       		</a>
+		</div>
+		<table class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>Nome</th>
+					<th>CNPJ</th>
+					<th>Endereço</th>
+					<th>Cidade</th>
+					<th>Email</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="farmacia : ${pharmacies}">
+					<td th:text="${pharmacy.getNome()}" ></td>
+					<td th:text="${pharmacy.getCnpj()}"></td>
+					<td th:text="${pharmacy.getEndereco()}"></td>
+					<td th:text="${pharmacy.getCidade()}"></td>
+					<td th:text="${pharmacy.getEmail()}"></td>
+					<td>
+						<a th:href="@{/pharmacies/update/{id}(id = ${pharmacy.id})}"
+						   class="btn btn-primary">
+							Alterar
+						</a>
+						
+						<a th:href="@{/pharmacies/delete/{id}(id = ${pharmacy.id})}"
+						   class="btn btn-danger">
+							Excluir
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
