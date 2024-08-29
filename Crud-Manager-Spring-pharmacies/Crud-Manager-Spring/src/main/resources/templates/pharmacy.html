@@ -28,23 +28,22 @@
 			</thead>
 			<tbody>
 				<tr th:each="farmacia : ${pharmacies}">
-					<td th:text="${pharmacy.getNome()}" ></td>
-					<td th:text="${pharmacy.getCnpj()}"></td>
-					<td th:text="${pharmacy.getEndereco()}"></td>
-					<td th:text="${pharmacy.getCidade()}"></td>
-					<td th:text="${pharmacy.getEmail()}"></td>
+					<td th:text="${farmacia.getNome()}"></td>
+					<td th:text="${farmacia.getCnpj()}"></td>
+					<td th:text="${farmacia.getEndereco()}"></td>
+					<td th:text="${farmacia.getCidade()}"></td>
+					<td th:text="${farmacia.getEmail()}"></td>
 					<td>
-						<a th:href="@{/pharmacies/update/{id}(id = ${pharmacy.id})}"
-						   class="btn btn-primary">
+						<a th:href="@{/pharmacies/update/{id}(id = ${farmacia.id})}" class="btn btn-primary">
 							Alterar
 						</a>
 						
-						<a th:href="@{/pharmacies/delete/{id}(id = ${pharmacy.id})}"
-						   class="btn btn-danger">
+						<a th:href="@{/pharmacies/delete/{id}(id = ${farmacia.id})}" class="btn btn-danger">
 							Excluir
 						</a>
 					</td>
 				</tr>
+				
 			</tbody>
 		</table>
 	</div>
