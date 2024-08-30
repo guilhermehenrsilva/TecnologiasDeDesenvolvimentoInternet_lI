@@ -23,15 +23,12 @@ public class Pharmacy {
 	private Integer id;
 	
 	@NotBlank(message = "O nome da Farmacia não pode ser vazio!")
-	@Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]+$", message = "O nome não pode conter números ou caracteres especiais")
 	private String nome;
 	
 	@NotBlank(message = "O CNPJ não pode estar vazio!")
-	//@Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}", message = "O CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX")
 	private String cnpj;
 
-	//@NotBlank(message = "O endereço da Farmacia não pode ser vazio!")
-	//@Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]+$", message = "O nome não pode conter números ou caracteres especiais")
+	@NotBlank(message = "O endereço da Farmacia não pode ser vazio!")
 	private String endereco;
 	
 		
@@ -80,7 +77,7 @@ public class Pharmacy {
 		return endereco;
 	}
 
-	public void setEndereco(String nome) {
+	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
 
