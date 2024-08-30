@@ -20,69 +20,50 @@ import jakarta.validation.Valid;
 
 @Controller
 public class MedicineController {
-	
-	@Autowired
-	private MedicineRepository medicineRepo;
-	
-	@Autowired
-	private PharmacyRepository pharmacyRepo;
-	
-	@GetMapping("/medicines")
-	public String listMedicines(Model model) {
-		List<Medicine> medicines = medicineRepo.findAll();
-		
-		model.addAttribute("medicines", medicines);
-		
-		return "medicine";
-	}
-	
-	@GetMapping("/medicines/form")
-	public String medicineForm(Model model) {
-		model.addAttribute("medicamento", new Medicine());
-		model.addAttribute("farmacia", pharmacyRepo.findAll());
-		return "medicines_form";
-	}
-	
-	@PostMapping("/medicines/register")
-	public String medicineNew(@Valid
-							@ModelAttribute("medicamento")
-							Medicine medicine,
-							BindingResult erros) {
-		if (erros.hasErrors()) {
-			return "medicines_form";
-		}
-		
-		pharmacyRepo.save(medicine.getPharmacy());
-		medicineRepo.save(medicine);
-		
-		return "redirect:/medicines";
-	}
-	
-	@GetMapping("/medicines/update/{id}")
-	public String medicineUpdate(@PathVariable("id")
-							   Integer id,
-							   Model model) {
-		
-		Optional<Medicine> medicineOpt = medicineRepo.findById(id);
-		Medicine medicine;
-		
-		if(!medicineOpt.isPresent()) {
-			medicine = new Medicine();
-		} else {
-			medicine = medicineOpt.get();
-		}
-		
-		model.addAttribute("medicamento", medicine);
-		model.addAttribute("farmacias", pharmacyRepo.findAll());
-		return "medicines_form";
-	}
-	
-	@GetMapping("/medicines/delete/{id}")
-	public String medicineDelete(@PathVariable("id") Integer id) {
-		
-		medicineRepo.delete(new Medicine(id));
-		
-		return "redirect:/medicines";
-	}
-	
+    
+    @Autowired
+    private MedicineRepository medicineRepo;
+    
+    @Autowired
+    private PharmacyRepository pharmacyRepo;
+    
+    @GetMapping("/medicines")
+    public String listMedicines(Model model) {
+        List<Medicine> medicines = medicineRepo.findAll();
+        model.addAttribute("medicines", medicines);
+        return "medicine";
+    }
+    
+    @GetMapping("/medicines/form")
+    public String medicineForm(Model model) {
+        model.addAttribute("medicine", new Medicine());
+        model.addAttribute("pharmacy", pharmacyRepo.findAll());
+        return "medicines_form";
+    }
+    
+    @PostMapping("/medicines/register")
+    public String medicineNew(@Valid @ModelAttribute("medicine") Medicine medicine, BindingResult erros) {
+        if (erros.hasErrors()) {
+            return "medicines_form";
+        }
+        
+        // Não precisa salvar a farmácia aqui se já estiver associada ao medicamento
+        medicineRepo.save(medicine);
+        return "redirect:/medicines";
+    }
+    
+    @GetMapping("/medicines/update/{id}")
+    public String medicineUpdate(@PathVariable("id") Integer id, Model model) {
+        Optional<Medicine> medicineOpt = medicineRepo.findById(id);
+        Medicine medicine = medicineOpt.orElse(new Medicine());
+        model.addAttribute("medicine", medicine);
+        model.addAttribute("pharmacy", pharmacyRepo.findAll());
+        return "medicines_form";
+    }
+    
+    @GetMapping("/medicines/delete/{id}")
+    public String medicineDelete(@PathVariable("id") Integer id) {
+        medicineRepo.deleteById(id);
+        return "redirect:/medicines";
+    }
 }

@@ -18,6 +18,7 @@
 			
 			<input type="hidden" id="id" th:field="*{id}">
 			
+			<!-- nome -->
 			<span class="text-danger"
 				  th:if="${#fields.hasErrors('nome')}"
 				  th:errors="*{nome}">
@@ -27,6 +28,7 @@
 			       class="form-control mb-4 col-4"
 			       th:field="*{nome}">       
 			
+				   <!-- cnpj -->
 			<span class="text-danger"
 				  th:if="${#fields.hasErrors('cnpj')}"
 				  th:errors="*{cnpj}">
@@ -37,6 +39,7 @@
 			       th:field="*{cnpj}"> 
 
 			
+				   <!-- endereco -->
 			<span class="text-danger"
 				  th:if="${#fields.hasErrors('endereco')}"
 				  th:errors="*{endereco}"> 
@@ -47,7 +50,7 @@
 				   th:field="*{endereco}">
 
 			
-			
+				   <!-- cidade -->
 			<span class="text-danger"
 				  th:if="${#fields.hasErrors('cidade')}"
 				  th:errors="*{cidade}">
@@ -56,6 +59,7 @@
 				   class="form-control mb-4 col-4"
 				   th:field="*{cidade}">
 				   
+				   <!-- email -->
 			 <span class="text-danger"
 				   th:if="${#fields.hasErrors('email')}"
 				   th:errors="*{email}">

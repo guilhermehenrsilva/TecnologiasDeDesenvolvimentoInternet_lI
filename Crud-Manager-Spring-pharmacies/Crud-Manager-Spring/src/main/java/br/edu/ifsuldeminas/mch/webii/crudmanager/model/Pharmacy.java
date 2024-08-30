@@ -36,7 +36,7 @@ public class Pharmacy {
 	
 		
 	@NotBlank(message = "O nome da cidade não pode ser vazio!")
-	//@Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]+$", message = "O nome da cidade não pode conter números ou caracteres especiais")
+	@Pattern(regexp = "^[A-Za-zÀ-ÿ\\s]+$", message = "O nome da cidade não pode conter números ou caracteres especiais")
 	private String cidade;
 	
 	@NotBlank(message = "O e-mail da farmacia não pode ser vazio!")

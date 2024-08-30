@@ -24,56 +24,40 @@ public class PharmacyController {
 	
 	@GetMapping("/pharmacies")
 	public String listPharmacies(Model model) {
-		
 		List<Pharmacy> pharmacies = pharmacyRepo.findAll();
-		
 		model.addAttribute("pharmacies", pharmacies);
-		
 		return "pharmacy";
 	}
 	
 	@GetMapping("/pharmacies/form")
-	public String pharmacyForm(@ModelAttribute("pharmacy") Pharmacy pharmacy) { 			
+	public String pharmacyForm(Model model) { 
+		model.addAttribute("pharmacy", new Pharmacy());
 		return "pharmacies_form";
 	}
-
 	
 	@PostMapping("/pharmacies/register")
-	public String pharmacyNew(@Valid
-                          @ModelAttribute("pharmacy")
-                          Pharmacy pharmacy,
-                          BindingResult erros) {
-    if (erros.hasErrors()) {
-        return "pharmacies_form";
-    }
-    pharmacyRepo.save(pharmacy);
-    return "redirect:/pharmacies";
-}
+	public String pharmacyNew(@Valid @ModelAttribute("pharmacy") Pharmacy pharmacy, BindingResult erros) {
+		if (erros.hasErrors()) {
+			return "pharmacies_form";
+		}
+		pharmacyRepo.save(pharmacy);
+		return "redirect:/pharmacies";
+	}
 	
 	@GetMapping("/pharmacies/update/{id}")
-	public String pharmacyUpdate(@PathVariable("id")
-								Integer id,
-								Model model) {
-		
+	public String pharmacyUpdate(@PathVariable("id") Integer id, Model model) {
 		Optional<Pharmacy> pharmacyOpt = pharmacyRepo.findById(id);
-		Pharmacy pharmacy;
-		if (!pharmacyOpt.isPresent()) {
-			pharmacy = new Pharmacy();
+		if (pharmacyOpt.isPresent()) {
+			model.addAttribute("pharmacy", pharmacyOpt.get());
 		} else {
-			pharmacy = pharmacyOpt.get();
+			model.addAttribute("pharmacy", new Pharmacy());
 		}
-		
-		model.addAttribute("farmacia", pharmacy);
-		
 		return "pharmacies_form";
 	}
 	
 	@GetMapping("/pharmacies/delete/{id}")
-	public String patientDelete(@PathVariable("id") Integer id) {
-		
-		pharmacyRepo.delete(new Pharmacy(id));
-		
+	public String pharmacyDelete(@PathVariable("id") Integer id) {
+		pharmacyRepo.deleteById(id);
 		return "redirect:/pharmacies";  
 	}
-	
 }
