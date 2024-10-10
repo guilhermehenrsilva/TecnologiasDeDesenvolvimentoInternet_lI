@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+}
+
+header {
+    background-color: #00c0d7;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    /* flex-wrap: wrap; */
+    justify-content: space-around;
+    padding: 40px;
+}
+
+.box {
+    width: 30%;
+    padding: 20px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #00a85a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #008b4a;
+}
+
+p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+
+footer{
+    text-align: center;
+    
+}
+.title-bar1 {
+    background-color: #f50303; /* Cor da barra de título */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px 5px 0 0; /* Cantos arredondados no topo */
+    font-weight: bold; /* Texto em negrito */
+    margin-bottom: 15px; /* Espaçamento abaixo da barra */
+}
+
+.title-bar2 {
+    background-color: #d1e238; /* Cor da barra de título */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px 5px 0 0; /* Cantos arredondados no topo */
+    font-weight: bold; /* Texto em negrito */
+    margin-bottom: 15px; /* Espaçamento abaixo da barra */
+}
+
+.title-bar3 {
+    background-color: #03e2f2; /* Cor da barra de título */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px 5px 0 0; /* Cantos arredondados no topo */
+    font-weight: bold; /* Texto em negrito */
+    margin-bottom: 15px; /* Espaçamento abaixo da barra */
+}
+
+.title-bar4 {
+    background-color: #424242; /* Cor da barra de título */
+    color: white; /* Cor do texto */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 5px 5px 0 0; /* Cantos arredondados no topo */
+    font-weight: bold; /* Texto em negrito */
+    margin-bottom: 15px; /* Espaçamento abaixo da barra */
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Bases</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Conversor de Bases</h1>
+    </header>
+
+    <section class="content">
+        <div class="box box-1">
+            <div class="title-bar1">Converter Binário para:</div>
+            <input type="text" id="binaryInput" placeholder="Digite Binário">
+            <button onclick="convertBinaryToDecimal()">Decimal</button>
+            <button onclick="convertBinaryToHex()">Hexadecimal</button>
+            <button onclick="convertBinaryToOctal()">Octal (EXTRA)</button>
+            <p id="binaryResult"></p>
+        </div>
+        
+        <div class="box box-2">
+            <div class="title-bar2">Converter Hexadecimal para:</div>
+            <input type="text" id="hexInput" placeholder="Digite Hexadecimal">
+            <button onclick="convertHexToBinary()">Binário</button>
+            <button onclick="convertHexToDecimal()">Decimal</button>
+            <button onclick="convertHexToOctal()">Octal (EXTRA)</button>
+            <p id="hexResult"></p>
+        </div>
+        
+        <div class="box box-3">
+            <div class="title-bar3">Converter Octal para (Extra):</div>
+            <input type="text" id="octalInput" placeholder="Digite Octal">
+            <button onclick="convertOctalToBinary()">Binário</button>
+            <button onclick="convertOctalToDecimal()">Decimal</button>
+            <button onclick="convertOctalToHex()">Hexadecimal</button> 
+            <p id="octalResult"></p>
+        </div>
+        
+        <div class="box box-4">
+            <div class="title-bar4">Converter Decimal para:</div>
+            <input type="text" id="decimalInput" placeholder="Digite Decimal">
+            <button onclick="convertDecimalToBinary()">Binário</button>
+            <button onclick="convertDecimalToHex()">Hexadecimal</button>
+            <button onclick="convertDecimalToOctal()">Octal (EXTRA)</button>
+            <p id="decimalResult"></p>
+        </div>
+        
+    </section>
+
+    <div class="Assi">
+       <footer>
+        <h3>Guilherme Henrique</h3>
+       </footer>
+            
+        
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
